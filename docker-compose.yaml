@@ -1,7 +1,7 @@
 services:
   db:
     image: postgres
-    container_name: jrtparcel-dev_db
+    container_name: acmparcel-dev_db
     ports:
       - "5432:5432"
     environment:
@@ -10,11 +10,10 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql
-      - ./pgadmin/servers.json:/pgadmin4/servers.json
 
   pgadmin:
     image: dpage/pgadmin4:latest
-    container_name: jrtparcel-pgadmin
+    container_name: acmparcel-pgadmin
     environment:
       PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
@@ -27,7 +26,7 @@ services:
 
   backend:
     build: .
-    container_name: jrtparcel-backend
+    container_name: acmparcel-backend
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB}
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
@@ -36,6 +35,7 @@ services:
       - "8080:8080"
     depends_on:
       - db
+
 volumes:
   postgres_data:
   pgadmin_data:

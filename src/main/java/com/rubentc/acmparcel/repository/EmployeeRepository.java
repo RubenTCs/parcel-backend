@@ -1,6 +1,6 @@
-package com.rubentc.jrtparcel.repository;
+package com.rubentc.acmparcel.repository;
 
-import com.rubentc.jrtparcel.entity.Employee;
+import com.rubentc.acmparcel.entity.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

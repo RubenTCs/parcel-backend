@@ -1,4 +1,4 @@
-package com.rubentc.jrtparcel.config;
+package com.rubentc.acmparcel.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

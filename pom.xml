@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.rubentc</groupId>
-    <artifactId>JRTParcel</artifactId>
+    <artifactId>ACMParcel</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>JRTParcel</name>
-    <description>JRTParcel</description>
+    <name>ACMParcel</name>
+    <description>ACMParcel</description>
     <url/>
     <licenses>
         <license/>

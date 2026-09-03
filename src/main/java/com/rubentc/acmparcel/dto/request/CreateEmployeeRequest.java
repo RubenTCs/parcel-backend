@@ -1,4 +1,4 @@
-package com.rubentc.jrtparcel.dto.request;
+package com.rubentc.acmparcel.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

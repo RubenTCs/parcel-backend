@@ -1,8 +1,10 @@
-package com.rubentc.jrtparcel.controller;
+package com.rubentc.acmparcel.controller;
 
-import com.rubentc.jrtparcel.dto.request.CreateEmployeeRequest;
-import com.rubentc.jrtparcel.service.EmployeeService;
+import com.rubentc.acmparcel.dto.request.CreateEmployeeRequest;
+import com.rubentc.acmparcel.entity.Employee;
+import com.rubentc.acmparcel.service.EmployeeService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,7 +18,8 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public String createEmployee(@Valid @RequestBody CreateEmployeeRequest request) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public Employee createEmployee(@Valid @RequestBody CreateEmployeeRequest request) {
         return employeeService.createEmployee(request);
     }
 

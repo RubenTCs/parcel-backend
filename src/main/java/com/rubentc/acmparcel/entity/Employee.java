@@ -1,12 +1,23 @@
-package com.rubentc.jrtparcel.entity;
+package com.rubentc.acmparcel.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "employees", indexes = @Index(name = "email_index", columnList = "email"))
 public class Employee {
@@ -20,7 +31,7 @@ public class Employee {
     private String email;
 
     @Column(nullable = false)
-    private String employeeName;
+    private String name;
 
     @Column(nullable = false)
     private String passwordHash;
@@ -32,4 +43,12 @@ public class Employee {
             inverseJoinColumns = @JoinColumn(name = "roleId")
     )
     private Set<Role> roles = new HashSet<>();
+
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
+    private Instant createdAt;
+
+    @UpdateTimestamp
+    @Column(nullable = false)
+    private Instant updatedAt;
 }
