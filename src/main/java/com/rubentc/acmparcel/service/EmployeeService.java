@@ -54,7 +54,7 @@ public class EmployeeService {
     }
 
     @Transactional
-    public Employee updateRoles(UUID employeeId, UpdateEmployeeRoleRequest request) {
+    public Employee updateEmployeeRoles(UUID employeeId, UpdateEmployeeRoleRequest request) {
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(() ->
                         new CustomException("Employee not found"));
