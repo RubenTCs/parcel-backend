@@ -1,6 +1,7 @@
 package com.rubentc.acmparcel.service;
 
 import com.rubentc.acmparcel.dto.request.CreateEmployeeRequest;
+import com.rubentc.acmparcel.dto.request.UpdateEmployeeActiveStatusRequest;
 import com.rubentc.acmparcel.dto.request.UpdateEmployeeRoleRequest;
 import com.rubentc.acmparcel.entity.Role;
 import com.rubentc.acmparcel.exception.CustomException;
@@ -8,6 +9,7 @@ import com.rubentc.acmparcel.repository.EmployeeRepository;
 import com.rubentc.acmparcel.entity.Employee;
 import com.rubentc.acmparcel.repository.RoleRepository;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -68,6 +70,18 @@ public class EmployeeService {
         }
 
         employee.setRoles(roles);
+
+        return employeeRepository.save(employee);
+
+    }
+
+    @Transactional
+    public Employee updateEmployeeActiveStatus(UUID id, @Valid UpdateEmployeeActiveStatusRequest request) {
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(() ->
+                        new CustomException("Employee not found"));
+
+        employee.setActive(request.isActive());
 
         return employeeRepository.save(employee);
 

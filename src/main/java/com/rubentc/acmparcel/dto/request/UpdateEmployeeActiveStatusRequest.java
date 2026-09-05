@@ -3,12 +3,9 @@ package com.rubentc.acmparcel.dto.request;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
-import java.util.Set;
-import java.util.UUID;
-
 @Data
-public class UpdateEmployeeRoleRequest {
+public class UpdateEmployeeActiveStatusRequest {
 
     @NotBlank
-    private Set<UUID> roleIds;
+    private boolean isActive;
 }

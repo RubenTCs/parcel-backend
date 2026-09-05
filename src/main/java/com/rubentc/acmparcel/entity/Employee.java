@@ -5,9 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.annotations.UuidGenerator;
+import org.hibernate.annotations.*;
 
 import java.time.Instant;
 import java.util.HashSet;
@@ -51,4 +49,7 @@ public class Employee {
     @UpdateTimestamp
     @Column(nullable = false)
     private Instant updatedAt;
+
+    @Column(nullable = false)
+    private boolean isActive = true;
 }

@@ -1,6 +1,7 @@
 package com.rubentc.acmparcel.controller;
 
 import com.rubentc.acmparcel.dto.request.CreateEmployeeRequest;
+import com.rubentc.acmparcel.dto.request.UpdateEmployeeActiveStatusRequest;
 import com.rubentc.acmparcel.dto.request.UpdateEmployeeRoleRequest;
 import com.rubentc.acmparcel.entity.Employee;
 import com.rubentc.acmparcel.service.EmployeeService;
@@ -28,11 +29,13 @@ public class EmployeeController {
 
     @PutMapping("/{id}/roles")
     @ResponseStatus(HttpStatus.OK)
-    public Employee updateEmployeeRole(
-            @PathVariable UUID id,
-            @Valid @RequestBody UpdateEmployeeRoleRequest request) {
+    public Employee updateEmployeeRole(@PathVariable UUID id, @Valid @RequestBody UpdateEmployeeRoleRequest request) {
 
         return employeeService.updateEmployeeRoles(id, request);
+    }
+
+    public Employee updateEmployeeActiveStatusRequest(@PathVariable UUID id, @Valid @RequestBody UpdateEmployeeActiveStatusRequest request) {
+        return employeeService.updateEmployeeActiveStatus(id, request);
     }
 
 }
