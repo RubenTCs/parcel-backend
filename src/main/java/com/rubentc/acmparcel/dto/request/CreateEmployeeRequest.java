@@ -2,20 +2,19 @@ package com.rubentc.acmparcel.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import lombok.Data;
+import jakarta.validation.constraints.NotEmpty;
 
-@Data
-public class CreateEmployeeRequest {
+import java.util.Set;
+import java.util.UUID;
 
-    @NotBlank
-    private String name;
+public record CreateEmployeeRequest(
+        @NotBlank
+        @Email
+        String email,
 
-    @NotBlank
-    @Email
-    private String email;
+        @NotBlank
+        String name,
 
-    @NotBlank
-    @Size(min = 8)
-    private String password;
-}
+        @NotEmpty
+        Set<UUID> roleIds
+) {}

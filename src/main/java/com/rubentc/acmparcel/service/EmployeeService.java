@@ -1,89 +1,87 @@
 package com.rubentc.acmparcel.service;
 
 import com.rubentc.acmparcel.dto.request.CreateEmployeeRequest;
-import com.rubentc.acmparcel.dto.request.UpdateEmployeeActiveStatusRequest;
-import com.rubentc.acmparcel.dto.request.UpdateEmployeeRoleRequest;
+import com.rubentc.acmparcel.dto.response.EmployeeResponse;
 import com.rubentc.acmparcel.entity.Role;
+import com.rubentc.acmparcel.entity.User;
+import com.rubentc.acmparcel.enums.AccountStatus;
 import com.rubentc.acmparcel.exception.CustomException;
 import com.rubentc.acmparcel.repository.EmployeeRepository;
 import com.rubentc.acmparcel.entity.Employee;
 import com.rubentc.acmparcel.repository.RoleRepository;
+import com.rubentc.acmparcel.repository.UserRepository;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class EmployeeService {
 
+    private final UserRepository userRepository;
     private final EmployeeRepository employeeRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public EmployeeService(EmployeeRepository employeeRepository, RoleRepository roleRepository , PasswordEncoder passwordEncoder) {
-        this.employeeRepository = employeeRepository;
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
+    //This will be managed by HR or Owner
+    @Transactional
+    public EmployeeResponse createEmployee(CreateEmployeeRequest request) {
 
-    public Employee createEmployee(CreateEmployeeRequest request) {
-
-        if(employeeRepository.existsByEmail(request.getEmail())) {
-            throw new CustomException("Employee with email " + request.getEmail() + " already exists");
+        if(userRepository.existsByEmail(request.email())) {
+            throw new CustomException("User with email " + request.email() + " already exists");
         }
 
-        Role employeeRole = roleRepository.findByName("EMPLOYEE")
-                .orElseThrow(() ->
-                        new CustomException("EMPLOYEE Role not found"));
+        User user = User.builder()
+                .email(request.email())
+                .status(AccountStatus.PENDING)
+                .build();
 
-        Employee employee = new Employee();
+        userRepository.save(user);
 
-        employee.setName(request.getName());
-        employee.setEmail(request.getEmail());
+        List<Role> roleList = roleRepository.findAllById(request.roleIds());
 
-        employee.setPasswordHash(
-                passwordEncoder.encode(request.getPassword())
-        );
+        if(roleList.size() != request.roleIds().size()) {
+            throw new CustomException("Role Id not found");
+        }
 
-        employee.setRoles(Set.of(employeeRole));
+        Set<Role> roles = new HashSet<>(roleList);
 
-        return employeeRepository.save(employee);
+        Employee employee = Employee.builder()
+                .user(user)
+                .name(request.name())
+                .roles(roles)
+                .build();
 
+        employeeRepository.save(employee);
+
+        return EmployeeResponse.from(employee);
     }
 
     @Transactional
-    public Employee updateEmployeeRoles(UUID employeeId, UpdateEmployeeRoleRequest request) {
+    public void updateEmployeeRoles(UUID employeeId, Set<UUID> roleIds) {
         Employee employee = employeeRepository.findById(employeeId)
-                .orElseThrow(() ->
-                        new CustomException("Employee not found"));
+                .orElseThrow(() -> new CustomException("Employee Id not found"));
 
-        Set<Role> roles = new HashSet<>(
-                roleRepository.findAllById(request.getRoleIds())
-        );
+        List<Role> roles = roleRepository.findAllById(roleIds);
 
-        if (roles.size() != request.getRoleIds().size()) {
-            throw new CustomException("One or more roles not found");
+        if (roles.size() != roleIds.size()) {
+            throw new CustomException("Role Id not found");
         }
 
-        employee.setRoles(roles);
-
-        return employeeRepository.save(employee);
-
+        employee.setRoles(new HashSet<>(roles));
     }
 
     @Transactional
-    public Employee updateEmployeeActiveStatus(UUID id, @Valid UpdateEmployeeActiveStatusRequest request) {
-        Employee employee = employeeRepository.findById(id)
-                .orElseThrow(() ->
-                        new CustomException("Employee not found"));
+    public void updateEmployeeStatus(UUID employeeId, AccountStatus status) {
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new CustomException("Employee Id not found"));
 
-        employee.setActive(request.isActive());
-
-        return employeeRepository.save(employee);
-
+        employee.getUser().setStatus(status);
     }
 }

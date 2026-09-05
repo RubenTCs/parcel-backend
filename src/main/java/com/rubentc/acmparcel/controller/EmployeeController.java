@@ -1,41 +1,57 @@
 package com.rubentc.acmparcel.controller;
 
 import com.rubentc.acmparcel.dto.request.CreateEmployeeRequest;
-import com.rubentc.acmparcel.dto.request.UpdateEmployeeActiveStatusRequest;
-import com.rubentc.acmparcel.dto.request.UpdateEmployeeRoleRequest;
+import com.rubentc.acmparcel.dto.request.UpdateEmployeeStatusRequest;
+import com.rubentc.acmparcel.dto.request.UpdateEmployeeRolesRequest;
+import com.rubentc.acmparcel.dto.response.EmployeeResponse;
 import com.rubentc.acmparcel.entity.Employee;
 import com.rubentc.acmparcel.service.EmployeeService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/employees")
+@RequiredArgsConstructor
 public class EmployeeController {
 
     private final EmployeeService employeeService;
 
-    public EmployeeController(EmployeeService employeeService) {
-        this.employeeService = employeeService;
-    }
-
+//    @PreAuthorize("hasAuthority('')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Employee createEmployee(@Valid @RequestBody CreateEmployeeRequest request) {
+    public EmployeeResponse createEmployee(@Valid @RequestBody CreateEmployeeRequest request) {
         return employeeService.createEmployee(request);
     }
 
-    @PutMapping("/{id}/roles")
-    @ResponseStatus(HttpStatus.OK)
-    public Employee updateEmployeeRole(@PathVariable UUID id, @Valid @RequestBody UpdateEmployeeRoleRequest request) {
+//    @PreAuthorize("hasAuthority('')")
+    @PutMapping("/{employeeId}/roles")
+    public ResponseEntity<Void> updateEmployeeRoles(
+            @PathVariable UUID employeeId,
+            @Valid @RequestBody UpdateEmployeeRolesRequest request
+    ) {
+        employeeService.updateEmployeeRoles( employeeId, request.roleIds() );
 
-        return employeeService.updateEmployeeRoles(id, request);
+        return ResponseEntity.noContent().build();
     }
 
-    public Employee updateEmployeeActiveStatusRequest(@PathVariable UUID id, @Valid @RequestBody UpdateEmployeeActiveStatusRequest request) {
-        return employeeService.updateEmployeeActiveStatus(id, request);
+//    @PreAuthorize("hasAuthority('')")
+    @PatchMapping("/{employeeId}/status")
+    public ResponseEntity<Void> updateEmployeeStatus(
+            @PathVariable UUID employeeId,
+            @Valid @RequestBody UpdateEmployeeStatusRequest request
+    ){
+        employeeService.updateEmployeeStatus(
+                employeeId,
+                request.status()
+        );
+
+        return ResponseEntity.noContent().build();
     }
 
 }

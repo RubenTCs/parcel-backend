@@ -1,14 +1,12 @@
 package com.rubentc.acmparcel.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
+
 
 import java.util.Set;
 import java.util.UUID;
 
-@Data
-public class UpdateEmployeeRoleRequest {
-
-    @NotBlank
-    private Set<UUID> roleIds;
-}
+public record UpdateEmployeeRolesRequest (
+        @NotBlank
+        Set<UUID> roleIds
+) { }
