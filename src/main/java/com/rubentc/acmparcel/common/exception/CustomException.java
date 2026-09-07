@@ -1,4 +1,4 @@
-package com.rubentc.acmparcel.exception;
+package com.rubentc.acmparcel.common.exception;
 
 public class CustomException extends RuntimeException {
     public CustomException(String message) {

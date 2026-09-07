@@ -5,7 +5,7 @@ import com.rubentc.acmparcel.employee.dto.response.EmployeeResponse;
 import com.rubentc.acmparcel.role.entity.Role;
 import com.rubentc.acmparcel.user.entity.User;
 import com.rubentc.acmparcel.user.entity.AccountStatus;
-import com.rubentc.acmparcel.exception.CustomException;
+import com.rubentc.acmparcel.common.exception.CustomException;
 import com.rubentc.acmparcel.employee.repository.EmployeeRepository;
 import com.rubentc.acmparcel.employee.entity.Employee;
 import com.rubentc.acmparcel.role.repository.RoleRepository;

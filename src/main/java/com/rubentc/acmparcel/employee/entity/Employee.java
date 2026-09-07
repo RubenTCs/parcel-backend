@@ -16,7 +16,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "employees", indexes = @Index(name = "email_index", columnList = "email"))
+@Table(name = "employees")
 public class Employee {
 
     @Id

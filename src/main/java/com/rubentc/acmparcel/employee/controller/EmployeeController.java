@@ -9,8 +9,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -19,6 +21,13 @@ import java.util.UUID;
 public class EmployeeController {
 
     private final EmployeeService employeeService;
+
+//    @PreAuthorize("hasAuthority('')")
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public EmployeeResponse getAllEmployees() {
+        return null; // To Test Postman connection, will update later
+    }
 
 //    @PreAuthorize("hasAuthority('')")
     @PostMapping
