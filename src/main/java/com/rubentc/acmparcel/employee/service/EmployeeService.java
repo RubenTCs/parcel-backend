@@ -1,18 +1,17 @@
-package com.rubentc.acmparcel.service;
+package com.rubentc.acmparcel.employee.service;
 
-import com.rubentc.acmparcel.dto.request.CreateEmployeeRequest;
-import com.rubentc.acmparcel.dto.response.EmployeeResponse;
-import com.rubentc.acmparcel.entity.Role;
-import com.rubentc.acmparcel.entity.User;
-import com.rubentc.acmparcel.enums.AccountStatus;
+import com.rubentc.acmparcel.employee.dto.request.CreateEmployeeRequest;
+import com.rubentc.acmparcel.employee.dto.response.EmployeeResponse;
+import com.rubentc.acmparcel.role.entity.Role;
+import com.rubentc.acmparcel.user.entity.User;
+import com.rubentc.acmparcel.user.entity.AccountStatus;
 import com.rubentc.acmparcel.exception.CustomException;
-import com.rubentc.acmparcel.repository.EmployeeRepository;
-import com.rubentc.acmparcel.entity.Employee;
-import com.rubentc.acmparcel.repository.RoleRepository;
-import com.rubentc.acmparcel.repository.UserRepository;
+import com.rubentc.acmparcel.employee.repository.EmployeeRepository;
+import com.rubentc.acmparcel.employee.entity.Employee;
+import com.rubentc.acmparcel.role.repository.RoleRepository;
+import com.rubentc.acmparcel.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -27,7 +26,6 @@ public class EmployeeService {
     private final UserRepository userRepository;
     private final EmployeeRepository employeeRepository;
     private final RoleRepository roleRepository;
-    private final PasswordEncoder passwordEncoder;
 
     //This will be managed by HR or Owner
     @Transactional

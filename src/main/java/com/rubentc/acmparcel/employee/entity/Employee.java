@@ -1,10 +1,11 @@
-package com.rubentc.acmparcel.entity;
+package com.rubentc.acmparcel.employee.entity;
 
+import com.rubentc.acmparcel.role.entity.Role;
+import com.rubentc.acmparcel.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.*;
 
-import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;

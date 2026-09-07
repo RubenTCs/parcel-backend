@@ -1,4 +1,4 @@
-package com.rubentc.acmparcel.entity;
+package com.rubentc.acmparcel.permission.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

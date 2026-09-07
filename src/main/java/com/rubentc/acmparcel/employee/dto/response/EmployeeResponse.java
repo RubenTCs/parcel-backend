@@ -1,7 +1,7 @@
-package com.rubentc.acmparcel.dto.response;
+package com.rubentc.acmparcel.employee.dto.response;
 
-import com.rubentc.acmparcel.entity.Employee;
-import com.rubentc.acmparcel.entity.Role;
+import com.rubentc.acmparcel.employee.entity.Employee;
+import com.rubentc.acmparcel.role.entity.Role;
 
 import java.util.Set;
 import java.util.UUID;

@@ -1,4 +1,4 @@
-package com.rubentc.acmparcel.dto.request;
+package com.rubentc.acmparcel.employee.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 

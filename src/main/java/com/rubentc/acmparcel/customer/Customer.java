@@ -1,5 +1,6 @@
-package com.rubentc.acmparcel.entity;
+package com.rubentc.acmparcel.customer;
 
+import com.rubentc.acmparcel.user.entity.User;
 import jakarta.persistence.*;
 import org.hibernate.annotations.UuidGenerator;
 

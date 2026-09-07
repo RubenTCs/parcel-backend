@@ -1,5 +1,6 @@
-package com.rubentc.acmparcel.entity;
+package com.rubentc.acmparcel.role.entity;
 
+import com.rubentc.acmparcel.permission.entity.Permission;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;

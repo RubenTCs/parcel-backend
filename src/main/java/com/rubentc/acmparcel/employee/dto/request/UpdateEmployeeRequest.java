@@ -1,6 +1,6 @@
-package com.rubentc.acmparcel.dto.request;
+package com.rubentc.acmparcel.employee.dto.request;
 
-import com.rubentc.acmparcel.enums.AccountStatus;
+import com.rubentc.acmparcel.user.entity.AccountStatus;
 
 import java.util.Set;
 import java.util.UUID;

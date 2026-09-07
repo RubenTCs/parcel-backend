@@ -1,6 +1,5 @@
-package com.rubentc.acmparcel.entity;
+package com.rubentc.acmparcel.user.entity;
 
-import com.rubentc.acmparcel.enums.AccountStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;

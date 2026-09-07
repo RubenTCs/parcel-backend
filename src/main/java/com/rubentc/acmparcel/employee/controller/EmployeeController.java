@@ -1,16 +1,14 @@
-package com.rubentc.acmparcel.controller;
+package com.rubentc.acmparcel.employee.controller;
 
-import com.rubentc.acmparcel.dto.request.CreateEmployeeRequest;
-import com.rubentc.acmparcel.dto.request.UpdateEmployeeStatusRequest;
-import com.rubentc.acmparcel.dto.request.UpdateEmployeeRolesRequest;
-import com.rubentc.acmparcel.dto.response.EmployeeResponse;
-import com.rubentc.acmparcel.entity.Employee;
-import com.rubentc.acmparcel.service.EmployeeService;
+import com.rubentc.acmparcel.employee.dto.request.CreateEmployeeRequest;
+import com.rubentc.acmparcel.employee.dto.request.UpdateEmployeeStatusRequest;
+import com.rubentc.acmparcel.employee.dto.request.UpdateEmployeeRolesRequest;
+import com.rubentc.acmparcel.employee.dto.response.EmployeeResponse;
+import com.rubentc.acmparcel.employee.service.EmployeeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;

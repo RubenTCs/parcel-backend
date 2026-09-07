@@ -1,6 +1,6 @@
-package com.rubentc.acmparcel.repository;
+package com.rubentc.acmparcel.user.repository;
 
-import com.rubentc.acmparcel.entity.User;
+import com.rubentc.acmparcel.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
