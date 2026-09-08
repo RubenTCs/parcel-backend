@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import java.util.Set;
 import java.util.UUID;
 
-public record CreateEmployeeAccountRequest(
+public record CreateEmployeeAccountInvitationRequest(
         @NotBlank
         @Email
         String email,

@@ -2,14 +2,13 @@ package com.rubentc.acmparcel.auth.controller;
 
 import com.rubentc.acmparcel.auth.dto.LoginRequest;
 import com.rubentc.acmparcel.auth.dto.LoginResponse;
+import com.rubentc.acmparcel.auth.dto.SetPasswordRequest;
 import com.rubentc.acmparcel.auth.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -27,4 +26,12 @@ public class AuthController {
         );
     }
 
+    @PostMapping("/set-password")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<Void> setPassword(@Valid @RequestBody SetPasswordRequest request) {
+
+        authService.setPassword(request);
+
+        return ResponseEntity.noContent().build();
+    }
 }

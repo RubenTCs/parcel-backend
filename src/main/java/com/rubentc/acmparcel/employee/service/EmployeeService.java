@@ -1,7 +1,8 @@
 package com.rubentc.acmparcel.employee.service;
 
-import com.rubentc.acmparcel.employee.dto.request.CreateEmployeeAccountRequest;
-import com.rubentc.acmparcel.employee.dto.response.EmployeeResponse;
+import com.rubentc.acmparcel.auth.service.InvitationService;
+import com.rubentc.acmparcel.employee.dto.request.CreateEmployeeAccountInvitationRequest;
+import com.rubentc.acmparcel.employee.dto.response.CreateEmployeeAccountInvitationResponse;
 import com.rubentc.acmparcel.role.entity.Role;
 import com.rubentc.acmparcel.user.entity.User;
 import com.rubentc.acmparcel.user.entity.AccountStatus;
@@ -26,10 +27,11 @@ public class EmployeeService {
     private final UserRepository userRepository;
     private final EmployeeRepository employeeRepository;
     private final RoleRepository roleRepository;
+    private final InvitationService invitationService;
 
     //This will be managed by HR or Owner
     @Transactional
-    public EmployeeResponse createEmployee(CreateEmployeeAccountRequest request) {
+    public CreateEmployeeAccountInvitationResponse createEmployeeAccountInvitation(CreateEmployeeAccountInvitationRequest request) {
 
         if(userRepository.existsByEmail(request.email())) {
             throw new CustomException("User with email " + request.email() + " already exists");
@@ -43,13 +45,18 @@ public class EmployeeService {
 
         userRepository.save(user);
 
-        List<Role> roleList = roleRepository.findAllById(request.roleIds());
+        Set<Role> roles = new HashSet<>();
 
-        if(roleList.size() != request.roleIds().size()) {
-            throw new CustomException("Role Id not found");
+        if (request.roleIds() != null && !request.roleIds().isEmpty()) {
+
+            List<Role> roleList = roleRepository.findAllById(request.roleIds());
+
+            if (roleList.size() != request.roleIds().size()) {
+                throw new CustomException("Role Id not found");
+            }
+
+            roles.addAll(roleList);
         }
-
-        Set<Role> roles = new HashSet<>(roleList);
 
         Employee employee = Employee.builder()
                 .user(user)
@@ -59,7 +66,13 @@ public class EmployeeService {
 
         employeeRepository.save(employee);
 
-        return EmployeeResponse.from(employee);
+        String invitationToken =
+                invitationService.createInvitation(user);
+
+        return new CreateEmployeeAccountInvitationResponse(
+                employee.getId(),
+                invitationToken
+        );
     }
 
     @Transactional
