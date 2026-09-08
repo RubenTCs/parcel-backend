@@ -1,6 +1,6 @@
 package com.rubentc.acmparcel.employee.service;
 
-import com.rubentc.acmparcel.employee.dto.request.CreateEmployeeRequest;
+import com.rubentc.acmparcel.employee.dto.request.CreateEmployeeAccountRequest;
 import com.rubentc.acmparcel.employee.dto.response.EmployeeResponse;
 import com.rubentc.acmparcel.role.entity.Role;
 import com.rubentc.acmparcel.user.entity.User;
@@ -29,7 +29,7 @@ public class EmployeeService {
 
     //This will be managed by HR or Owner
     @Transactional
-    public EmployeeResponse createEmployee(CreateEmployeeRequest request) {
+    public EmployeeResponse createEmployee(CreateEmployeeAccountRequest request) {
 
         if(userRepository.existsByEmail(request.email())) {
             throw new CustomException("User with email " + request.email() + " already exists");
@@ -38,6 +38,7 @@ public class EmployeeService {
         User user = User.builder()
                 .email(request.email())
                 .status(AccountStatus.PENDING)
+                .passwordHash(null)
                 .build();
 
         userRepository.save(user);

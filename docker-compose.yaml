@@ -28,6 +28,7 @@ services:
     build: .
     container_name: acmparcel-backend
     environment:
+      SPRING_PROFILES_ACTIVE: dev
       JWT_SECRET: ${JWT_SECRET}
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB}
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}

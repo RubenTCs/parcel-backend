@@ -1,6 +1,6 @@
 package com.rubentc.acmparcel.employee.controller;
 
-import com.rubentc.acmparcel.employee.dto.request.CreateEmployeeRequest;
+import com.rubentc.acmparcel.employee.dto.request.CreateEmployeeAccountRequest;
 import com.rubentc.acmparcel.employee.dto.request.UpdateEmployeeStatusRequest;
 import com.rubentc.acmparcel.employee.dto.request.UpdateEmployeeRolesRequest;
 import com.rubentc.acmparcel.employee.dto.response.EmployeeResponse;
@@ -9,10 +9,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -32,7 +30,7 @@ public class EmployeeController {
 //    @PreAuthorize("hasAuthority('')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public EmployeeResponse createEmployee(@Valid @RequestBody CreateEmployeeRequest request) {
+    public EmployeeResponse createEmployee(@Valid @RequestBody CreateEmployeeAccountRequest request) {
         return employeeService.createEmployee(request);
     }
 
