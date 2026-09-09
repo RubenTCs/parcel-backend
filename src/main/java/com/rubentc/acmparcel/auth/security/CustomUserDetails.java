@@ -1,6 +1,5 @@
 package com.rubentc.acmparcel.auth.security;
 
-import com.rubentc.acmparcel.employee.entity.Employee;
 import com.rubentc.acmparcel.user.entity.User;
 import com.rubentc.acmparcel.user.entity.AccountStatus;
 import org.springframework.security.core.GrantedAuthority;

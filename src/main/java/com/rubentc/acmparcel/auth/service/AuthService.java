@@ -6,7 +6,6 @@ import com.rubentc.acmparcel.auth.dto.SetPasswordRequest;
 import com.rubentc.acmparcel.auth.entity.Invitation;
 import com.rubentc.acmparcel.common.exception.InvalidInvitationException;
 import com.rubentc.acmparcel.common.exception.PasswordMismatchException;
-import com.rubentc.acmparcel.common.exception.ResourceNotFoundException;
 import com.rubentc.acmparcel.user.entity.AccountStatus;
 import com.rubentc.acmparcel.user.entity.User;
 import jakarta.transaction.Transactional;
