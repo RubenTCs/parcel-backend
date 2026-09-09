@@ -18,20 +18,17 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(
+    @ResponseStatus(HttpStatus.OK)
+    public LoginResponse login(
             @Valid @RequestBody LoginRequest request) {
 
-        return ResponseEntity.ok(
-                authService.login(request)
-        );
+        return authService.login(request);
     }
 
     @PostMapping("/set-password")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<Void> setPassword(@Valid @RequestBody SetPasswordRequest request) {
+    public void setPassword(@Valid @RequestBody SetPasswordRequest request) {
 
         authService.setPassword(request);
-
-        return ResponseEntity.noContent().build();
     }
 }

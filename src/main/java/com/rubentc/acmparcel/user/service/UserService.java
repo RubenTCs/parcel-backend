@@ -1,7 +1,7 @@
 package com.rubentc.acmparcel.user.service;
 
 import com.rubentc.acmparcel.user.entity.User;
-import com.rubentc.acmparcel.common.exception.CustomException;
+import com.rubentc.acmparcel.common.exception.ResourceNotFoundException;
 import com.rubentc.acmparcel.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +15,6 @@ public class UserService {
 
     public User getUser(UUID userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new CustomException("Customer with Id" + userId +"did not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Customer with Id" + userId +"did not found"));
     }
 }

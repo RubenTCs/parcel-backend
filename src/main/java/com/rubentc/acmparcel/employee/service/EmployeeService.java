@@ -3,22 +3,25 @@ package com.rubentc.acmparcel.employee.service;
 import com.rubentc.acmparcel.auth.service.InvitationService;
 import com.rubentc.acmparcel.employee.dto.request.CreateEmployeeAccountInvitationRequest;
 import com.rubentc.acmparcel.employee.dto.response.CreateEmployeeAccountInvitationResponse;
+import com.rubentc.acmparcel.employee.dto.response.EmployeeResponse;
+import com.rubentc.acmparcel.employee.dto.response.EmployeeRoleResponse;
 import com.rubentc.acmparcel.role.entity.Role;
 import com.rubentc.acmparcel.user.entity.User;
 import com.rubentc.acmparcel.user.entity.AccountStatus;
-import com.rubentc.acmparcel.common.exception.CustomException;
+import com.rubentc.acmparcel.common.exception.ResourceNotFoundException;
 import com.rubentc.acmparcel.employee.repository.EmployeeRepository;
 import com.rubentc.acmparcel.employee.entity.Employee;
 import com.rubentc.acmparcel.role.repository.RoleRepository;
 import com.rubentc.acmparcel.user.repository.UserRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,12 +32,56 @@ public class EmployeeService {
     private final RoleRepository roleRepository;
     private final InvitationService invitationService;
 
-    //This will be managed by HR or Owner
+    @Transactional(readOnly = true)
+    public List<EmployeeResponse> getAllEmployees() {
+        return employeeRepository.findAll()
+                .stream()
+                .map(employee -> new EmployeeResponse(
+                        employee.getId(),
+                        employee.getUser().getId(),
+                        employee.getUser().getEmail(),
+                        employee.getName(),
+                        employee.getUser().getStatus(),
+                        employee.getRoles()
+                                .stream()
+                                .map(role -> new EmployeeRoleResponse(
+                                        role.getId(),
+                                        role.getName()
+                                ))
+                                .collect(Collectors.toSet())
+                ))
+                .toList();
+
+
+    }
+
+    @Transactional(readOnly = true)
+    public EmployeeResponse getEmployeeById(UUID id) {
+
+        Employee employee = employeeRepository.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException("Employee Id not found"));
+
+        return new EmployeeResponse(
+                employee.getId(),
+                employee.getUser().getId(),
+                employee.getUser().getEmail(),
+                employee.getName(),
+                employee.getUser().getStatus(),
+                employee.getRoles()
+                        .stream()
+                        .map(role -> new EmployeeRoleResponse(
+                                role.getId(),
+                                role.getName()
+                        ))
+                        .collect(Collectors.toSet())
+        );
+    }
+
     @Transactional
     public CreateEmployeeAccountInvitationResponse createEmployeeAccountInvitation(CreateEmployeeAccountInvitationRequest request) {
 
         if(userRepository.existsByEmail(request.email())) {
-            throw new CustomException("User with email " + request.email() + " already exists");
+            throw new ResourceNotFoundException("User with email " + request.email() + " already exists");
         }
 
         User user = User.builder()
@@ -52,7 +99,7 @@ public class EmployeeService {
             List<Role> roleList = roleRepository.findAllById(request.roleIds());
 
             if (roleList.size() != request.roleIds().size()) {
-                throw new CustomException("Role Id not found");
+                throw new ResourceNotFoundException("Role Id not found");
             }
 
             roles.addAll(roleList);
@@ -78,12 +125,12 @@ public class EmployeeService {
     @Transactional
     public void updateEmployeeRoles(UUID employeeId, Set<UUID> roleIds) {
         Employee employee = employeeRepository.findById(employeeId)
-                .orElseThrow(() -> new CustomException("Employee Id not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Employee Id not found"));
 
         List<Role> roles = roleRepository.findAllById(roleIds);
 
         if (roles.size() != roleIds.size()) {
-            throw new CustomException("Role Id not found");
+            throw new ResourceNotFoundException("Role Id not found");
         }
 
         employee.setRoles(new HashSet<>(roles));
@@ -92,7 +139,7 @@ public class EmployeeService {
     @Transactional
     public void updateEmployeeStatus(UUID employeeId, AccountStatus status) {
         Employee employee = employeeRepository.findById(employeeId)
-                .orElseThrow(() -> new CustomException("Employee Id not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Employee Id not found"));
 
         employee.getUser().setStatus(status);
     }

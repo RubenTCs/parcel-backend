@@ -4,7 +4,9 @@ import com.rubentc.acmparcel.auth.dto.LoginRequest;
 import com.rubentc.acmparcel.auth.dto.LoginResponse;
 import com.rubentc.acmparcel.auth.dto.SetPasswordRequest;
 import com.rubentc.acmparcel.auth.entity.Invitation;
-import com.rubentc.acmparcel.common.exception.CustomException;
+import com.rubentc.acmparcel.common.exception.InvalidInvitationException;
+import com.rubentc.acmparcel.common.exception.PasswordMismatchException;
+import com.rubentc.acmparcel.common.exception.ResourceNotFoundException;
 import com.rubentc.acmparcel.user.entity.AccountStatus;
 import com.rubentc.acmparcel.user.entity.User;
 import jakarta.transaction.Transactional;
@@ -50,24 +52,24 @@ public class AuthService {
     public void setPassword(@Valid SetPasswordRequest request) {
 
         if (!request.password().equals(request.confirmPassword())) {
-            throw new CustomException("Passwords don't match");
+            throw new PasswordMismatchException();
         }
 
         Invitation invitation =
                 invitationService.findByToken(request.token());
 
         if (invitation.getUsedAt() != null) {
-            throw new CustomException("Invalid Invitation");
+            throw new InvalidInvitationException();
         }
 
         if (invitation.getExpiresAt().isBefore(Instant.now())) {
-            throw new CustomException("Invalid Invitation");
+            throw new InvalidInvitationException();
         }
 
         User user = invitation.getUser();
 
         if (user.getStatus() != AccountStatus.PENDING) {
-            throw new CustomException("Invalid Invitation");
+            throw new InvalidInvitationException();
         }
 
         user.setPasswordHash(

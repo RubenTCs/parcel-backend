@@ -1,8 +1,10 @@
 package com.rubentc.acmparcel.auth.security;
 
+import com.rubentc.acmparcel.employee.entity.Employee;
 import com.rubentc.acmparcel.user.entity.User;
 import com.rubentc.acmparcel.user.entity.AccountStatus;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -33,7 +35,19 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+
+        if (user.getEmployee() == null) {
+            return List.of();
+        }
+
+        return user.getEmployee()
+                .getRoles()
+                .stream()
+                .flatMap(role -> role.getPermissions().stream())
+                .map(permission ->
+                        new SimpleGrantedAuthority(permission.getName())
+                )
+                .toList();
     }
 
     @Override
