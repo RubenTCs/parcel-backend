@@ -1,6 +1,7 @@
 package com.rubentc.acmparcel.employee.service;
 
 import com.rubentc.acmparcel.auth.service.InvitationService;
+import com.rubentc.acmparcel.common.exception.AlreadyExistException;
 import com.rubentc.acmparcel.employee.dto.request.CreateEmployeeAccountByInvitationRequest;
 import com.rubentc.acmparcel.employee.dto.response.CreateEmployeeAccountByInvitationResponse;
 import com.rubentc.acmparcel.employee.dto.response.EmployeeResponse;
@@ -81,7 +82,7 @@ public class EmployeeService {
     public CreateEmployeeAccountByInvitationResponse createEmployeeAccountByInvitation(CreateEmployeeAccountByInvitationRequest request) {
 
         if(userRepository.existsByEmail(request.email())) {
-            throw new ResourceNotFoundException("User with email " + request.email() + " already exists");
+            throw new AlreadyExistException(request.email());
         }
 
         User user = User.builder()
@@ -89,8 +90,6 @@ public class EmployeeService {
                 .status(AccountStatus.PENDING)
                 .passwordHash(null)
                 .build();
-
-        userRepository.save(user);
 
         Set<Role> roles = new HashSet<>();
 
@@ -111,6 +110,7 @@ public class EmployeeService {
                 .roles(roles)
                 .build();
 
+        userRepository.save(user);
         employeeRepository.save(employee);
 
         String invitationToken =

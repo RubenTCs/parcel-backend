@@ -3,6 +3,7 @@ package com.rubentc.acmparcel.auth.entity;
 import com.rubentc.acmparcel.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.time.Instant;
@@ -34,6 +35,7 @@ public class Invitation {
 
     private Instant usedAt;
 
+    @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private Instant createdAt;
 }

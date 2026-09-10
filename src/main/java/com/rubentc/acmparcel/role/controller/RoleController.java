@@ -1,6 +1,7 @@
 package com.rubentc.acmparcel.role.controller;
 
 import com.rubentc.acmparcel.role.dto.request.CreateRoleRequest;
+import com.rubentc.acmparcel.role.dto.request.UpdateRolePermissionRequest;
 import com.rubentc.acmparcel.role.dto.response.CreateRoleResponse;
 import com.rubentc.acmparcel.role.dto.response.RoleResponse;
 import com.rubentc.acmparcel.role.service.RoleService;
@@ -41,6 +42,16 @@ public class RoleController {
             @Valid @RequestBody CreateRoleRequest request){
         return roleService.createRole(request);
     }
-    // TODO: PUT /{rolesId} = Update Role | role:update
+
+    @PutMapping("/{roleId}/permissions")
+    @PreAuthorize("hasAuthority('role:assign-permission')")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateRolePermission(
+            @PathVariable UUID roleId,
+            @Valid @RequestBody UpdateRolePermissionRequest request){
+
+        roleService.updateRolePermission(roleId, request.permissionsIds());
+    }
+
     // TODO: DELETE /{roleId} = Delete Role | role:delete
 }

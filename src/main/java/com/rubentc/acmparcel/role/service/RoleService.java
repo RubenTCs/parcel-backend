@@ -63,7 +63,8 @@ public class RoleService {
                                 permission.getId(),
                                 permission.getName(),
                                 permission.getDescription()
-                        )).collect(Collectors.toSet())
+                        ))
+                        .collect(Collectors.toSet())
         );
     }
 
@@ -112,5 +113,22 @@ public class RoleService {
                 permissionResponses,
                 role.getCreatedAt()
         );
+    }
+
+    @Transactional
+    public void updateRolePermission(
+            UUID roleId,
+            Set<UUID> permissionIds
+    ) {
+        Role role = roleRepository.findById(roleId)
+                .orElseThrow(() -> new ResourceNotFoundException("Role Id not found"));
+
+        List<Permission> permissions = permissionRepository.findAllById(permissionIds);
+
+        if(permissions.size() != permissionIds.size()){
+            throw new ResourceNotFoundException("One or more permission not found");
+        }
+
+        role.setPermissions(new HashSet<>(permissions));
     }
 }
