@@ -3,8 +3,11 @@ package com.rubentc.acmparcel.role.entity;
 import com.rubentc.acmparcel.permission.entity.Permission;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -35,4 +38,12 @@ public class Role {
     )
     @Builder.Default
     private Set<Permission> permissions = new HashSet<>();
+
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
+    private Instant createdAt;
+
+    @UpdateTimestamp
+    @Column(nullable = false)
+    private Instant updatedAt;
 }

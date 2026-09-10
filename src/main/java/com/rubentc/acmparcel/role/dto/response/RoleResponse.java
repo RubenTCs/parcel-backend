@@ -1,4 +1,4 @@
-package com.rubentc.acmparcel.role.dto;
+package com.rubentc.acmparcel.role.dto.response;
 
 import com.rubentc.acmparcel.permission.dto.PermissionResponse;
 
