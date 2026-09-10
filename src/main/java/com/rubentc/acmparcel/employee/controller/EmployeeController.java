@@ -1,9 +1,9 @@
 package com.rubentc.acmparcel.employee.controller;
 
-import com.rubentc.acmparcel.employee.dto.request.CreateEmployeeAccountInvitationRequest;
+import com.rubentc.acmparcel.employee.dto.request.CreateEmployeeAccountByInvitationRequest;
 import com.rubentc.acmparcel.employee.dto.request.UpdateEmployeeRolesRequest;
 import com.rubentc.acmparcel.employee.dto.request.UpdateEmployeeStatusRequest;
-import com.rubentc.acmparcel.employee.dto.response.CreateEmployeeAccountInvitationResponse;
+import com.rubentc.acmparcel.employee.dto.response.CreateEmployeeAccountByInvitationResponse;
 import com.rubentc.acmparcel.employee.dto.response.EmployeeResponse;
 import com.rubentc.acmparcel.employee.service.EmployeeService;
 import jakarta.validation.Valid;
@@ -39,10 +39,10 @@ public class EmployeeController {
     @PreAuthorize("hasAuthority('employee:create')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CreateEmployeeAccountInvitationResponse createEmployeeAccountInvitation(
-            @Valid @RequestBody CreateEmployeeAccountInvitationRequest request) {
+    public CreateEmployeeAccountByInvitationResponse createEmployeeAccountInvitation(
+            @Valid @RequestBody CreateEmployeeAccountByInvitationRequest request) {
 
-        return employeeService.createEmployeeAccountInvitation(request);
+        return employeeService.createEmployeeAccountByInvitation(request);
     }
 
     @PreAuthorize("hasAuthority('employee:assign-role')")

@@ -1,8 +1,8 @@
 package com.rubentc.acmparcel.employee.service;
 
 import com.rubentc.acmparcel.auth.service.InvitationService;
-import com.rubentc.acmparcel.employee.dto.request.CreateEmployeeAccountInvitationRequest;
-import com.rubentc.acmparcel.employee.dto.response.CreateEmployeeAccountInvitationResponse;
+import com.rubentc.acmparcel.employee.dto.request.CreateEmployeeAccountByInvitationRequest;
+import com.rubentc.acmparcel.employee.dto.response.CreateEmployeeAccountByInvitationResponse;
 import com.rubentc.acmparcel.employee.dto.response.EmployeeResponse;
 import com.rubentc.acmparcel.employee.dto.response.EmployeeRoleResponse;
 import com.rubentc.acmparcel.role.entity.Role;
@@ -78,7 +78,7 @@ public class EmployeeService {
     }
 
     @Transactional
-    public CreateEmployeeAccountInvitationResponse createEmployeeAccountInvitation(CreateEmployeeAccountInvitationRequest request) {
+    public CreateEmployeeAccountByInvitationResponse createEmployeeAccountByInvitation(CreateEmployeeAccountByInvitationRequest request) {
 
         if(userRepository.existsByEmail(request.email())) {
             throw new ResourceNotFoundException("User with email " + request.email() + " already exists");
@@ -116,7 +116,7 @@ public class EmployeeService {
         String invitationToken =
                 invitationService.createInvitation(user);
 
-        return new CreateEmployeeAccountInvitationResponse(
+        return new CreateEmployeeAccountByInvitationResponse(
                 employee.getId(),
                 invitationToken
         );
