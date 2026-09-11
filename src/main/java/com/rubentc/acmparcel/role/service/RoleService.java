@@ -10,9 +10,9 @@ import com.rubentc.acmparcel.role.dto.response.CreateRoleResponse;
 import com.rubentc.acmparcel.role.dto.response.RoleResponse;
 import com.rubentc.acmparcel.role.entity.Role;
 import com.rubentc.acmparcel.role.repository.RoleRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
@@ -27,7 +27,7 @@ public class RoleService {
     private final RoleRepository roleRepository;
     private final PermissionRepository permissionRepository;
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<RoleResponse> getAllRoles() {
         return roleRepository.findAll()
                 .stream()
@@ -47,7 +47,7 @@ public class RoleService {
                 .toList();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public RoleResponse getRoleById(UUID id) {
 
         Role role = roleRepository.findById(id)
