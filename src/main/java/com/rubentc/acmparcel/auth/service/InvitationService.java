@@ -35,7 +35,7 @@ public class InvitationService {
         return rawToken;
     }
 
-        public Invitation findByToken(String rawToken) {
+    public Invitation findByToken(String rawToken) {
         String tokenHash = hashToken(rawToken);
 
         return invitationRepository.findByTokenHash(tokenHash)

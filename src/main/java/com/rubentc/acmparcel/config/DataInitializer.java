@@ -95,6 +95,18 @@ public class DataInitializer {
             Permission roleAssignPermission =
                     createPermission("role:assign-permission");
 
+            Permission permissionRead =
+                    createPermission("permission:read");
+
+            Permission permissionCreate =
+                    createPermission("permission:create");
+
+            Permission permissionUpdate =
+                    createPermission("permission:update");
+
+            Permission permissionDelete =
+                    createPermission("permission:delete");
+
 //==========================================================================
 // endregion
 //==========================================================================
@@ -138,7 +150,12 @@ public class DataInitializer {
                     roleCreate,
                     roleUpdate,
                     roleDelete,
-                    roleAssignPermission
+                    roleAssignPermission,
+
+                    permissionRead,
+                    permissionCreate,
+                    permissionUpdate,
+                    permissionDelete
             )));
 //==========================================================================
 // endregion
