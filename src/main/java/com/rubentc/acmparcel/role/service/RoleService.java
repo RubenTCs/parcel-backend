@@ -6,6 +6,7 @@ import com.rubentc.acmparcel.permission.dto.PermissionResponse;
 import com.rubentc.acmparcel.permission.entity.Permission;
 import com.rubentc.acmparcel.permission.repository.PermissionRepository;
 import com.rubentc.acmparcel.role.dto.request.CreateRoleRequest;
+import com.rubentc.acmparcel.role.dto.request.UpdateRoleRequest;
 import com.rubentc.acmparcel.role.dto.response.CreateRoleResponse;
 import com.rubentc.acmparcel.role.dto.response.RoleResponse;
 import com.rubentc.acmparcel.role.entity.Role;
@@ -130,5 +131,31 @@ public class RoleService {
         }
 
         role.setPermissions(new HashSet<>(permissions));
+    }
+
+    public RoleResponse updateRole(UUID roleId, UpdateRoleRequest request) {
+        Role role = roleRepository.findById(roleId)
+                .orElseThrow(() -> new ResourceNotFoundException("Role Id not found"));
+
+        role.setDescription(request.description());
+
+        roleRepository.saveAndFlush(role);
+
+        Set<PermissionResponse> permissionResponses =
+                role.getPermissions()
+                        .stream()
+                        .map(permission -> new PermissionResponse(
+                                permission.getId(),
+                                permission.getName(),
+                                permission.getDescription()
+                        ))
+                        .collect(Collectors.toSet());
+
+        return new RoleResponse(
+                role.getId(),
+                role.getName(),
+                role.getDescription(),
+                permissionResponses
+        );
     }
 }
