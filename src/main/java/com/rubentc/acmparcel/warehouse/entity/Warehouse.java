@@ -24,10 +24,8 @@ public class Warehouse {
     @Column(nullable = false, unique = true)
     private String warehouseCode;
 
-    @Column
     private String name;
 
-    @Column
     private String address;
 
     @Enumerated(EnumType.STRING)

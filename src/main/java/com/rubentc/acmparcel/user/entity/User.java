@@ -33,7 +33,6 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column
     private String passwordHash;
 
     @Enumerated(EnumType.STRING)
