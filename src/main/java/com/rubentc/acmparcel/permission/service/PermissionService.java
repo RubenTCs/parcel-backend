@@ -1,4 +1,4 @@
-package com.rubentc.acmparcel.permission;
+package com.rubentc.acmparcel.permission.service;
 
 import com.rubentc.acmparcel.common.exception.ResourceNotFoundException;
 import com.rubentc.acmparcel.permission.dto.PermissionResponse;
