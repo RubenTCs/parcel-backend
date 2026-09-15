@@ -1,15 +1,12 @@
 package com.rubentc.acmparcel.parcel.service;
 
-import com.rubentc.acmparcel.customer.Customer;
 import com.rubentc.acmparcel.parcel.dto.ParcelResponse;
-import com.rubentc.acmparcel.parcel.entity.Parcel;
 import com.rubentc.acmparcel.parcel.repository.ParcelRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
