@@ -1,12 +1,15 @@
 package com.rubentc.acmparcel.parcel.service;
 
+import com.rubentc.acmparcel.common.exception.ResourceNotFoundException;
 import com.rubentc.acmparcel.parcel.dto.ParcelResponse;
+import com.rubentc.acmparcel.parcel.entity.Parcel;
 import com.rubentc.acmparcel.parcel.repository.ParcelRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -30,5 +33,23 @@ public class ParcelService {
                        parcel.getHeight()
                        ))
                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public ParcelResponse getParcelById(UUID parcelId) {
+
+        Parcel parcel = parcelRepository.findById(parcelId)
+                .orElseThrow(() -> new ResourceNotFoundException("Parcel Id not found"));
+
+        return new ParcelResponse(
+                parcel.getId(),
+                parcel.getDescription(),
+                parcel.getSender(),
+                parcel.getReceiver(),
+                parcel.getWeight(),
+                parcel.getLength(),
+                parcel.getWidth(),
+                parcel.getHeight()
+        );
     }
 }
