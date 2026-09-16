@@ -1,6 +1,6 @@
 package com.rubentc.acmparcel.permission.controller;
 
-import com.rubentc.acmparcel.permission.PermissionService;
+import com.rubentc.acmparcel.permission.service.PermissionService;
 import com.rubentc.acmparcel.permission.dto.PermissionResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,8 +30,4 @@ public class PermissionController {
     public PermissionResponse getPermissionById(@PathVariable UUID permissionId) {
         return permissionService.getPermissionById(permissionId);
     }
-
-    // TODO: POST / CreatePermission | permission:create
-    // TODO: PUT /{permissionId} | permission:update
-    // TODO: DELETE /{permissionId} | permission:delete
 }

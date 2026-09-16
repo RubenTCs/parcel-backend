@@ -2,10 +2,18 @@ package com.rubentc.acmparcel.customer;
 
 import com.rubentc.acmparcel.user.entity.User;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.UUID;
 
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Table(name = "customers")
 public class Customer {
 
     @Id
@@ -23,6 +31,10 @@ public class Customer {
 
     @Column(nullable = false)
     private String firstName;
+
+    private String lastName;
+
+    private String address; //TODO: Considering making new Address Entity
 
     // yada yada other fields
 }

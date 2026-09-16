@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor()
+@RequiredArgsConstructor
 public class PermissionService {
     private final PermissionRepository permissionRepository;
 
@@ -30,6 +30,8 @@ public class PermissionService {
 
     @Transactional(readOnly = true)
     public List<PermissionResponse> getAllPermission() {
+
+
         return permissionRepository.findAll()
                 .stream()
                 .map(permission -> new PermissionResponse(

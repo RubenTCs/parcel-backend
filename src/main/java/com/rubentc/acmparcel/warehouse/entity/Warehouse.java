@@ -26,7 +26,7 @@ public class Warehouse {
 
     private String name;
 
-    private String address;
+    private String address; //TODO: Considering making new Address Entity
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
