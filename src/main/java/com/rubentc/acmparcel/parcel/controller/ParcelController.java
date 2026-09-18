@@ -1,7 +1,9 @@
 package com.rubentc.acmparcel.parcel.controller;
 
+import com.rubentc.acmparcel.parcel.dto.CreateParcelRequest;
 import com.rubentc.acmparcel.parcel.service.ParcelService;
 import com.rubentc.acmparcel.parcel.dto.ParcelResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,5 +31,12 @@ public class ParcelController {
     @ResponseStatus(HttpStatus.OK)
     public ParcelResponse getParcelById(@PathVariable UUID parcelId) {
         return parcelService.getParcelById(parcelId);
+    }
+
+    @PostMapping
+    @PreAuthorize("hasAuthority('parcel:create')")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createParcel(@Valid @RequestBody CreateParcelRequest request){
+        parcelService.createParcel(request);
     }
 }

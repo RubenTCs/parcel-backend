@@ -1,6 +1,7 @@
 package com.rubentc.acmparcel.parcel.service;
 
 import com.rubentc.acmparcel.common.exception.ResourceNotFoundException;
+import com.rubentc.acmparcel.parcel.dto.CreateParcelRequest;
 import com.rubentc.acmparcel.parcel.dto.ParcelResponse;
 import com.rubentc.acmparcel.parcel.entity.Parcel;
 import com.rubentc.acmparcel.parcel.repository.ParcelRepository;
@@ -51,5 +52,19 @@ public class ParcelService {
                 parcel.getWidth(),
                 parcel.getHeight()
         );
+    }
+
+    @Transactional
+    public void createParcel(CreateParcelRequest request) {
+        Parcel parcel = Parcel.builder()
+                .description(request.description())
+                .length(request.length())
+                .width(request.width())
+                .height(request.height())
+                .build();
+
+        parcelRepository.save(parcel);
+
+        // Maybe it needs return
     }
 }
