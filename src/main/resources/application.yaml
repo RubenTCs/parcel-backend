@@ -8,13 +8,18 @@ spring:
     import:
       - optional:file:.env[.properties]
   datasource:
-    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/parcelDev}
-    username: ${POSTGRES_USER:postgres}
-    password: ${POSTGRES_PASSWORD:postgres}
+#    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/parcelDev}
+#    username: ${POSTGRES_USER:postgres}
+#    password: ${POSTGRES_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
+    url: ${DATABASE_URL}
+
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+
+    show-sql: false
+    properties:
+      hibernate.hibernate.default_schema: app
 jwt:
   secret: ${JWT_SECRET}

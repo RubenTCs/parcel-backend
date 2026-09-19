@@ -1,15 +1,15 @@
 services:
-  db:
-    image: postgres
-    container_name: acmparcel-dev_db
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    volumes:
-      - postgres_data:/var/lib/postgresql
+#  db:
+#    image: postgres
+#    container_name: acmparcel-dev_db
+#    ports:
+#      - "5432:5432"
+#    environment:
+#      POSTGRES_DB: ${POSTGRES_DB}
+#      POSTGRES_USER: ${POSTGRES_USER}
+#      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+#    volumes:
+#      - postgres_data:/var/lib/postgresql
 
   pgadmin:
     image: dpage/pgadmin4:latest
@@ -21,8 +21,8 @@ services:
       - "5050:80"
     volumes:
       - pgadmin_data:/var/lib/pgadmin
-    depends_on:
-      - db
+#    depends_on:
+#      - db
 
   backend:
     build: .
@@ -30,14 +30,15 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: dev
       JWT_SECRET: ${JWT_SECRET}
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB}
-      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER}
-      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+#      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB}
+      SPRING_DATASOURCE_URL: ${DATABASE_URL}
+      SPRING_DATASOURCE_USERNAME: ${DATABASE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DATABASE_PASSWORD}
     ports:
       - "8080:8080"
-    depends_on:
-      - db
+#    depends_on:
+#      - db
 
 volumes:
-  postgres_data:
+#  postgres_data:
   pgadmin_data:
