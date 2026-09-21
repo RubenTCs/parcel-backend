@@ -1,29 +1,4 @@
 services:
-#  db:
-#    image: postgres
-#    container_name: acmparcel-dev_db
-#    ports:
-#      - "5432:5432"
-#    environment:
-#      POSTGRES_DB: ${POSTGRES_DB}
-#      POSTGRES_USER: ${POSTGRES_USER}
-#      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-#    volumes:
-#      - postgres_data:/var/lib/postgresql
-
-  pgadmin:
-    image: dpage/pgadmin4:latest
-    container_name: acmparcel-pgadmin
-    environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
-    ports:
-      - "5050:80"
-    volumes:
-      - pgadmin_data:/var/lib/pgadmin
-#    depends_on:
-#      - db
-
   backend:
     build: .
     container_name: acmparcel-backend
@@ -34,11 +9,6 @@ services:
       SPRING_DATASOURCE_URL: ${DATABASE_URL}
       SPRING_DATASOURCE_USERNAME: ${DATABASE_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${DATABASE_PASSWORD}
+      REDIS_URL: ${REDIS_URL}
     ports:
       - "8080:8080"
-#    depends_on:
-#      - db
-
-volumes:
-#  postgres_data:
-  pgadmin_data:
