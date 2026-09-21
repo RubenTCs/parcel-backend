@@ -12,6 +12,8 @@ import com.rubentc.acmparcel.role.dto.response.RoleResponse;
 import com.rubentc.acmparcel.role.entity.Role;
 import com.rubentc.acmparcel.role.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,6 +50,10 @@ public class RoleService {
                 .toList();
     }
 
+    @Cacheable(
+            value = "roles",
+            key = "#roleId"
+    )
     @Transactional(readOnly = true)
     public RoleResponse getRoleById(UUID id) {
 
@@ -116,6 +122,10 @@ public class RoleService {
         );
     }
 
+    @CacheEvict(
+            value = "roles",
+            key = "#roleId"
+    )
     @Transactional
     public void updateRolePermission(
             UUID roleId,
@@ -158,4 +168,6 @@ public class RoleService {
                 permissionResponses
         );
     }
+
+    //Delete Role
 }
