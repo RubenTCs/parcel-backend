@@ -6,8 +6,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.time.Duration;
+import java.util.Set;
 
 @Configuration
 @EnableCaching
@@ -25,5 +28,20 @@ public class RedisConfig {
         return RedisCacheManager.builder(connectionFactory)
                 .cacheDefaults(configuration)
                 .build();
+    }
+
+    @Bean
+    public RedisTemplate<String, Set<String>> redisTemplate(
+            RedisConnectionFactory connectionFactory
+    ) {
+        RedisTemplate<String, Set<String>> template = new RedisTemplate<>();
+
+        template.setConnectionFactory(connectionFactory);
+
+        template.setKeySerializer(new StringRedisSerializer());
+
+        template.afterPropertiesSet();
+
+        return template;
     }
 }
